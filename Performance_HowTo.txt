@@ -1,0 +1,45 @@
+Content:
+PCP_org_v0.py: greedy implementation of the IC-PCP algorithm
+PCP_org_v1.py: more stringent implementation of the IC-PCP algorithm
+
+PCP_org_v01.py: greedy implementation of the IC-PCP algorithm with final repair cycle
+PCP_org_v11.py: more stringent implementation of the IC-PCP algorithm  with final repair cycle
+
+
+Check the performance of the original IC-PCP example
+$ python PCP_org_v0.py -d ../input -i pcp
+
+If you look at the IC-PCP implementation 'PCP_v0.py' there is
+at the end of the main procedure a check '# check PCP end situation'.
+The final result is checked and from the output can be concluded
+if the result is valid.
+
+The output gives the cost of the start configuration by printing a line
+ 'start configuartion: cost=xxxx'.
+
+If the output shows the line
+'**** Invalid final configuration ****', 
+this indicates that the algorithm failed to find a solution.
+
+A valid solution is indicated by the line 'final configuration: cost=xxxx'.
+
+These lines are scanned by performance script 'PCP_perf_all.py' that runs an algorithm and check its performance 
+on a number of test sets for a topology of a fixed size.
+
+For instance to run the algorithm 'PCP_v0.py' on the task graphs with the inspiral topology having 30 nodes
+for the p parameter ranging from 60 to 20% :
+ 
+$ python PCP_perf_all.py -a 'PCP_v0.py' -d '../input/inspiral' -g 30 -p 100 -s 20 > Inspiral_30_v0_p100_20.txt
+
+To split the range of p and run this script in parallel using 4 cores you have to prepare a text file 'inspiral_30.txt' 
+with the following content:
+
+-a 'PCP_v0.py' -d '../input/inspiral' -g 30 -p 100 -s 90 > Inspiral_30_v0_p100_90.txt
+-a 'PCP_v0.py' -d '../input/inspiral' -g 30 -p 90 -s 80 > Inspiral_30_v0_p90_80.txt
+-a 'PCP_v0.py' -d '../input/inspiral' -g 30 -p 80 -s 70 > Inspiral_30_v0_p80_70.txt
+-a 'PCP_v0.py' -d '../input/inspiral' -g 30 -p 70 -s 60 > Inspiral_30_v0_p70_60.txt
+
+then use xargs:
+
+$ cat inspiral_30.txt | xargs -n 12 -I '{}' -P 4 sh -c "python PCP_perf_all.py {}"
+
