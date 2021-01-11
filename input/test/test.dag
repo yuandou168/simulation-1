@@ -1,0 +1,48 @@
+{
+  "nodes": [
+        { "order": 0,
+          "name": "t0"
+        },
+        { "order": 1,
+          "name": "t1"
+        },
+        { "order": 2,
+          "name": "t2"
+        },
+        { "order": 3,
+          "name": "t3"
+        },
+        { "order": 4,
+          "name": "t4"
+        },
+        { "order": 5,
+          "name": "t5"
+        }
+  ],
+  "links": [
+        { "source": "t0",
+          "target": "t1",
+          "throughput": 0
+        },
+        { "source": "t1",
+          "target": "t2",
+          "throughput": 5
+        },
+        { "source": "t1",
+          "target": "t3",
+          "throughput": 4
+        },
+        { "source": "t2",
+          "target": "t4",
+          "throughput": 4
+        },
+        { "source": "t3",
+          "target": "t4",
+          "throughput": 3
+        },
+        { "source": "t4",
+          "target": "t5",
+          "throughput": 0
+        }
+    ]
+}
